@@ -36,26 +36,20 @@ export class AppComponent {
 
   filterByText: string = '';
 
-  private ponctuationRemover(text: string): string {
-    return text.normalize('NDF').replace(/[\u0300-\u036f]/g, '');
-  }
-
   contactFilterByText(): Contact[] {
     if (!this.filterByText) {
       return this.contacts;
     }
     return this.contacts.filter((contact) => {
-      return this.ponctuationRemover(contact.name)
+      return contact.name
         .toLowerCase()
-        .includes(this.ponctuationRemover(this.filterByText).toLowerCase());
+        .includes(this.filterByText.toLowerCase());
     });
   }
 
   contactFilterByFirstLetter(letter: string): Contact[] {
     return this.contactFilterByText().filter((contact) => {
-      return this.ponctuationRemover(contact.name)
-        .toLowerCase()
-        .startsWith(this.ponctuationRemover(letter).toLowerCase());
+      return contact.name.toLowerCase().startsWith(letter);
     });
   }
 }
